@@ -1,0 +1,73 @@
+
+<% if @cart.empty? %>
+<% end %>
+<% total = 0 %>
+<div class="box" style="min-height:500px;width:900px;margin-left:100px;overflow:hidden;">
+
+                            <h1>Shopping cart</h1>
+                            <p class="text-muted">You currently have <%= @cart.size %> item(s) in your cart.</p>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="2">Product</th>
+                                            <th>Quantity</th>
+                                            <th>Unit price</th>
+                                            <th>Discount</th>
+                                            <th colspan="2">Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+									<% @cart.each do | id, quantity | %>
+									<% item = Item.find_by_id(id) %>
+									<% total = 0 %>
+                                        <tr>
+										    <td>
+                                            <div class="image">
+											<%= link_to (image_tag item.image_url, :style => "height:50px;width:50px"), item %>
+											</div>
+											</td>
+                                            <td class="title">
+											    <%= link_to item.title, item %>
+                                            </td>
+                                            <td>
+											<div style="width:60px;">
+                                                <input type="number" value="<%= quantity %>" class="form-control">
+												</div>
+                                            </td>
+                                            <td><%= number_to_currency(item.price,:unit => "£") %></td>
+                                            <td>$0.00</td>
+                                            <td><%= number_to_currency(quantity * item.price, :unit => "£") %></td>
+											<% total += quantity * item.price %>
+                                            <td><a href="/cart/remove/<%= item.id %>"><i class="fa fa-trash-o"></i></a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+									<% end %>
+                                    <tfoot>
+                                        <tr>
+                                            <th colspan="5">Total</th>
+                                            <th colspan="2">
+											<%= number_to_currency(total, :unit => "€") %></th>
+                                        </tr>
+                                    </tfoot>
+									
+                                </table>
+
+                            </div>
+                            <!-- /.table-responsive -->
+
+                            <div class="box-footer">
+                                <div class="pull-left">
+                                    <a href="/home" class="btn btn-default"><i class="fa fa-chevron-left"></i> Continue shopping</a>
+                                </div>
+                                <div class="pull-right">
+                                    <button class="btn btn-default"><i class="fa fa-refresh"></i> Update basket</button>
+                                    <button type="submit" class="btn btn-primary">Proceed to checkout <i class="fa fa-chevron-right"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                   
+
+                    </div>

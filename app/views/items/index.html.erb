@@ -1,0 +1,62 @@
+<% @items.each do |item| %>
+<% p=@items.first %>
+<% @l=p.category %>
+<% end %>
+<div class="box" style="width:1100px;">
+                        <h1><%= @l %>
+						</h1>
+                    </div>
+					
+					
+
+<br>
+<style>
+p.price {
+    font-size: 18px;
+    text-align: center;
+    font-weight: 300;
+	}
+	</style>
+<div style="margin-left:50px;width:auto;height:600px">
+
+    <% @items.each do |item| %>
+	<div id="content1" style="position:relative;float:left;width:233px">
+	  <div class="image" style="height:270px;width:203px">
+	  <%= link_to (image_tag item.image_url, :style => "height:270px;width:203px"), item %>
+	  </div>
+	  <div style="height:222px;width:203px;background-color:white;margin-top:-19px">
+	  <h3 style="font-size: 18px;font-weight: 700;height: 39.6px;text-align: center;overflow: hidden;"><br><%= link_to item.title, item %></h3> 
+	  <p class="price"><%= number_to_currency(item.price, :unit => "€") %></p>
+	  <p class="buttons">
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/detail.html" class="btn btn-default">View detail</a>
+										</p>
+										<p class="button">
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<a href="/cart/<%= item.id %>" class="btn btn-primary" style="color:white;"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                    </p>
+	  <a href="/cart/<%= item.id %>">Add to Cart</a><br><br>
+	  <% if current_user.admin? %>
+	  <%= link_to 'Edit', edit_item_path(item) %> |
+	  <%= link_to 'Destroy', item, :confirm => 'Are you sure?', :method => :delete %>
+	  <%= link_to 'New Item', new_item_path %>
+	  <% end %>
+	  </div>
+	  </div>
+	  <% end %>
+</div>
+	  <br>
+<br>
+ <% @items.each do |item| %>
+ <div class="pro">
+ <%= link_to (image_tag item.image_url, :style => "height:100px;width:150px"), item %>
+ <br>
+ <%=h item.description %>
+ <%= link_to item.title, item %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= item.price %>
+ <br>
+  <a href="/cart/<%= item.id %>">Add to Cart</a><br><br>
+ </div>
+ <% end %>
+ <% if current_user.admin? %>
+<%= link_to 'New Item', new_item_path %>
+<% end %>
+<br>
